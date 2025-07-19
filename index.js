@@ -1,5 +1,4 @@
-// Consuming AppsFlyer generated URL
-import { AFScript } from "./appsflyer-script.js";
+import { AFScript } from "./appsflyer-smart-script.js";
 
 (() => {
   window.addEventListener('DOMContentLoaded', async () => {
@@ -18,6 +17,7 @@ import { AFScript } from "./appsflyer-script.js";
     btn.addEventListener('click', (event) => {
       console.log('click in url:', newResult.clickURL);
       const a = document.createElement('a');
+      // Consuming AppsFlyer generated URL
       a.href = newResult.clickURL;
       // a.target = '_blank'
       a.click();
@@ -26,7 +26,7 @@ import { AFScript } from "./appsflyer-script.js";
   });
 })();
 
-console.log('check global values:', window.AF_SMART_SCRIPT);
+console.log('check global values:', window.AF_SMART_SCRIqPT);
 
 function getVisualParams(uri) {
   const formattedParams = {};

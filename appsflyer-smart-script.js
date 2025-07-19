@@ -1,8 +1,7 @@
 // If needed, you can download the script from: https://onelinksmartscript.appsflyer.com/onelink-smart-script-latest.js
 // See an example of implementation and how to place the URL result behind a CTA on your website: https://appsflyersdk.github.io/appsflyer-onelink-smart-script/examples/utm_parameters.html?utm_campaign=mycmpn&utm_source=mysource
 // See an example of how to display a QR code: https://appsflyersdk.github.io/appsflyer-onelink-smart-script/examples/qr_code.html?inmedia=my_email&incmp=my_campaign
-const AF_SCRIPT_PATH = 'appsflyer-script-basecode.js'
-
+const AF_SCRIPT_PATH = 'appsflyer-smart-script_dependency.js'
 
 //Initializing Smart Script arguments (Public properties, privately exported for this usecase)
 const constructorArgs = {
@@ -25,7 +24,7 @@ const constructorArgs = {
   },
 };
 
-export const AFScript = async() => {
+export const AFScript = async () => {
   const localConstructor = { ...constructorArgs };
   const { generateOneLinkURL } = await createAppsFlyerEncapsulatedObject();
 
