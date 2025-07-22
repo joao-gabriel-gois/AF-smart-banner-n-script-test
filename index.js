@@ -1,8 +1,9 @@
-import { AFScript } from "./appsflyer-smart-script.js";
+import { AFScript } from "./js/lib/appsflyer/appsflyer-smart-script.js";
 
 (() => {
   window.addEventListener('DOMContentLoaded', async () => {
     const { constructorArgs, generateNewOneLinkURL } = await AFScript();
+
     const result = generateNewOneLinkURL();
     console.log('\n\nDefault Values.\nContructor:', constructorArgs, '\nResult:', result.clickURL);
     console.table(getVisualParams(result.clickURL));
