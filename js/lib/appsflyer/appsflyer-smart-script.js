@@ -5,7 +5,8 @@ import {runInSandbox, get3rdPartyCode } from '../../utils/sandbox.js'
 
 const AF_SCRIPT_PATH = 'js/lib/appsflyer/appsflyer-smart-script_dependency.js'
 
-//Initializing Smart Script arguments (Public properties, privately exported for this usecase)
+// Initializing Smart Script arguments. Exported instances will never
+// affect the var below
 const constructorArgs = {
   oneLinkURL: "https://joaotest.onelink.me/JvP5",
   webReferrer: "af_channel",
@@ -27,23 +28,27 @@ const constructorArgs = {
 };
 
 export const AFScript = async () => {
+  // clone to prevent intented mutation from importers to affect this non exported file
+  // var (constructorArgs above) value - avoiding assigning the non-exported var by reference
   const localConstructor = { ...constructorArgs };
   const { generateOneLinkURL } = await createAppsFlyerEncapsulatedObject();
 
   return {
-    constructorArgs: localConstructor, // clone to prevent mutation from outside
+    // passing by reference to allow changes inside this context whenever importers change the isntance.contructorArgs
+    // in their context. The intention is to allow changes in the instance's contructorArgs properties to be reflected
+    // in the possible new `generateNewOneLinkURL` method calls (example in the index.js and README.md)
+    constructorArgs: localConstructor,
     generateNewOneLinkURL() { 
       return generateOneLinkURL(localConstructor);
     }
   }
 };
 
-// The initialization code follows the Smart Script code above (APPSFLYER_3RD_PARTY_CODE)
-async function createAppsFlyerEncapsulatedObject() {
+async function createAppsFlyerEncapsulatedObject(path = AF_SCRIPT_PATH) {
   // Runing Appsflyer's Public Script in sandbox
-  const rawCode = await get3rdPartyCode(AF_SCRIPT_PATH);
+  const rawCode = await get3rdPartyCode(path);
   const sandbox = runInSandbox(rawCode);
-  console.log('testing global:', window.AF_SMART_SCRIPT, '\ntesting sandbox:', sandbox.AF_SMART_SCRIPT)
+  console.log('testing global (expect undefined):', window.AF_SMART_SCRIPT, '\ntesting sandbox (expect the AF object):', sandbox.AF_SMART_SCRIPT)
 
   return sandbox.AF_SMART_SCRIPT;
 };

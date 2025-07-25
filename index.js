@@ -4,7 +4,6 @@ import { renderAFBanner } from "./js/lib/appsflyer/appsflyer-smart-banner.js";
 (() => {
   window.addEventListener('DOMContentLoaded', async () => {
     renderAFBanner();
-
     const { constructorArgs, generateNewOneLinkURL } = await AFScript();
 
     const result = generateNewOneLinkURL();
@@ -16,7 +15,7 @@ import { renderAFBanner } from "./js/lib/appsflyer/appsflyer-smart-banner.js";
     console.log('\n\nNew Values.\nContructor:', constructorArgs, '\nResult:', newResult.clickURL);
     console.table(getVisualParams(newResult.clickURL));
 
-    // attaching updated defaultValue for mediaSource to be called on button click:
+    // attaching updated defaultValue for mediaSource in the link to be called on button click:
     const btn = document.getElementById('CTA');
     btn.addEventListener('click', (event) => {
       console.log('click in url:', newResult.clickURL);
