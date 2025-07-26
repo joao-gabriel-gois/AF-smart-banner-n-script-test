@@ -26,6 +26,7 @@ const constructorArgs = {
     ],
   },
 };
+console.log('(appsflyer-smart-script) - started');
 
 export const AFScript = async () => {
   // clone to prevent intented mutation from importers to affect this non exported file
@@ -33,6 +34,7 @@ export const AFScript = async () => {
   const localConstructor = { ...constructorArgs };
   const { generateOneLinkURL } = await createAppsFlyerEncapsulatedObject();
 
+  console.log('(appsflyer-smart-script) - finished');
   return {
     // passing by reference to allow changes inside this context whenever importers change the isntance.contructorArgs
     // in their context. The intention is to allow changes in the instance's contructorArgs properties to be reflected
@@ -44,11 +46,12 @@ export const AFScript = async () => {
   }
 };
 
+
 async function createAppsFlyerEncapsulatedObject(path = AF_SCRIPT_PATH) {
   // Runing Appsflyer's Public Script in sandbox
   const rawCode = await get3rdPartyCode(path);
   const sandbox = runInSandbox(rawCode);
-  console.log('testing global (expect undefined):', window.AF_SMART_SCRIPT, '\ntesting sandbox (expect the AF object):', sandbox.AF_SMART_SCRIPT)
+  console.log('\t(appsflyer-smart-script):\n\t\ttesting global (expect undefined):', window.AF_SMART_SCRIPT, '\n\t\ttesting sandbox (expect the AF object):', sandbox.AF_SMART_SCRIPT);
 
   return sandbox.AF_SMART_SCRIPT;
 };

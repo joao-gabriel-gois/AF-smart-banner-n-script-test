@@ -4,6 +4,8 @@
 // use case, it must be triggered by the DOMContentLoaded event, once this page is fetching
 // only one entry-point JS Script - index.js - in the HTML header).
 
+console.log('(appsflyer-smart-banner) - started');
+
 // Once this module is imported, we start to observe if banner is rendered
 observeBannerRendering();
 
@@ -23,6 +25,7 @@ function observeBannerRendering(elementToObserve = document.body) { // Smart Ban
     for (const mutation of mutationsList) {
       const banner = document.querySelector('#smart-banner');
       if (mutation.type === 'childList' && banner) {
+        console.log('\t(appsflyer-smart-banner): Banner rendered.');
         // add any additional logic after banner rendering below
         // in this use case we are simply removing the additional div
         // that appsflyer adds before the banner as margin to it once 
@@ -32,7 +35,9 @@ function observeBannerRendering(elementToObserve = document.body) { // Smart Ban
             // as the sibling is not necessarily rendered once the banner mutation
             // is observed, let's turn it async, so it will be forced to go to the
             // callback queue and be executed once all rendering (sync) logic is done
+            console.log('\t(appsflyer-smart-banner > observerCallback): Banner margin-div removed.');
             banner.previousElementSibling.remove();
+            console.log('(appsflyer-smart-banner) - finished');
           }, 0);
         }
         observer.disconnect();
