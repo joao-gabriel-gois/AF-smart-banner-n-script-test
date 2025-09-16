@@ -12,6 +12,7 @@ const constructorArgs = {
   webReferrer: "af_channel",
   afParameters: {
     mediaSource: {
+      keys:["utm_source"],
       defaultValue:"joao_test_smart_script"
     },
     afSub1: {
@@ -21,6 +22,10 @@ const constructorArgs = {
     afCustom: [
       {
         paramKey:"af_ss_ui",
+        defaultValue:"true"
+      },
+      {
+        paramKey:"is_retargeting",
         defaultValue:"true"
       },
     ],

@@ -1,11 +1,11 @@
 import { AFScript } from "./js/lib/appsflyer/appsflyer-smart-script.js";
-import { renderAFBanner } from "./js/lib/appsflyer/appsflyer-smart-banner.js";
+import banners from "./js/lib/appsflyer/appsflyer-smart-banner.js";
 
 console.log('(index.js) - started');
 
 (() => {
   window.addEventListener('DOMContentLoaded', async () => {
-    renderAFBanner();
+    banners.show();
     const { constructorArgs, generateNewOneLinkURL } = await AFScript();
 
     const result = generateNewOneLinkURL();
