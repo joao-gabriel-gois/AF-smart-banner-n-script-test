@@ -1,19 +1,14 @@
+import { createModuleError } from './general.js';
+if (!window || !globalThis || !self) throw createModuleError(
+  'sandbox',
+  'None of possible Global objects were found (`window`, `globalThis` or `self`)!',
+);
 // Sandbox Utils
-
-// Below func was necessary due to the fact that declaring directly the 3rd party code
-// as string was causing syntax errors, once it has all different types of quotes, that
-// is: single (''), double ("") and grave accent (``). The goal was to control as much 
-// as possible all 3rd party code without directly changing it.
-export async function get3rdPartyCode(path) {
-  return await fetch(path).then(res => res.text());
-}
-
 // Call it whenever you need that the code that use global properties in window
 // obj. have private context to work in. Not working for banners, the reason is
 // better explained in both ./appsflyer-smart-banner.js comments and README.md
 export function runInSandbox(codeString) {
   const sandbox = createSandboxedGlobal();
-
   // The `with` statement lets us make all unqualified references go through the proxy
   const script = new Function('sandbox', `
     with (sandbox) {
